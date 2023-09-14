@@ -43,7 +43,6 @@ USB_bug = 1;
 USB_bug = 0;
 torqueTrigger = 0;
 for i = 1,#Config.servo.dirReverse do
-  print(i, Config.servo.dirReverse[i])
   scale[Config.servo.dirReverse[i]] = -scale[Config.servo.dirReverse[i]];
 end
 
@@ -360,7 +359,7 @@ end
 function nonsync_read()
 
   --Position reading
-  local idToRead={7,8,9,10,11,12,13,14,15,16,17,18};   --Head only reading
+  local idToRead={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};   --Head only reading
   if actuator.readType[1]==1 then --All servo reading
     for i=1,#idMap do 
       idToRead[i]=i;

@@ -33,20 +33,15 @@ stance.bodyTiltStance=20*math.pi/180; --bodyInitial bodyTilt, 0 for webots
 stance.dpLimitStance=vector.new({.04, .03, .07, .4, .4, .4});
 
 --Sit final value
--- stance.initangle = vector.new({
---   0,0,
---   105, 30, -45,
--- --  0,  -2, -16, 110, -119, 2, 
--- --  0, 2, -16, 110, -119, -2,
---   0,  -2, -60, 130, -60, 2, 
---   0, 2, -60, 130, -60, -2,
---   105, -30, -45,
--- --  0,0
--- })*math.pi/180;
-
 stance.initangle = vector.new({
-  0,  -2, -16, 110, -119, 2,
-  0, 2, -16, 110, -119, -2,
+  0,0,
+  105, 30, -45,
+--  0,  -2, -16, 110, -119, 2, 
+--  0, 2, -16, 110, -119, -2,
+  0,  -2, -60, 130, -60, 2, 
+  0, 2, -60, 130, -60, -2,
+  105, -30, -45,
+--  0,0
 })*math.pi/180;
 
 -- Head Parameters
@@ -83,30 +78,21 @@ acc.zero=vector.new({512,512,512}); --Spec
 
 --Servo parameters
 servo={}
--- servo.idMap={
---   19,20,		--Head
---   2,4,6,		--LArm
---   8,10,12,14,16,18,--LLeg
---   7,9,11,13,15,17,--RLeg
---   1,3,5,		--RArm
---   --21, 22, --Gripper
--- }
--- servo.dirReverse={
---   2,	--Head
---   4,	--LArm
---   6,7,8,9,--LLeg
---   12,13,16,--RLeg
---   18,19,20,--RArm
---   --22,--RGripper
--- }
-
 servo.idMap={
+  19,20,		--Head
+  2,4,6,		--LArm
   8,10,12,14,16,18,--LLeg
   7,9,11,13,15,17,--RLeg
+  1,3,5,		--RArm
+  --21, 22, --Gripper
 }
 servo.dirReverse={
+  2,	--Head
+  4,	--LArm
   6,7,8,9,--LLeg
   12,13,16,--RLeg
+  18,19,20,--RArm
+  --22,--RGripper
 }
 
 ----------------------------------------------
@@ -131,18 +117,13 @@ if servo.pid ==0 then -- For old firmware with 12-bit precision
   print(robotName.." has 12-bit firmware")
   servo.steps=vector.ones(nJoint)*1024;
   servo.moveRange=vector.ones(nJoint)*300*math.pi/180;
-  -- servo.posZero={
-  --   512,512,
-  --   205,665,819,
-  --   512,512,512,512,512,512,
-  --   512,512,512,512,512,512,
-  --   819,358,205,
-  --   --512,		--For aux
-  -- }
-
   servo.posZero={
+    512,512,
+    205,665,819,
     512,512,512,512,512,512,
     512,512,512,512,512,512,
+    819,358,205,
+    --512,		--For aux
   }
 
   -- SLOPE parameters
@@ -154,17 +135,13 @@ if servo.pid ==0 then -- For old firmware with 12-bit precision
 else -- For new, PID firmware with 14-bit precision
   print(robotName.." has 14-bit firmware")
   servo.steps=vector.ones(nJoint)*4096;
-  -- servo.posZero={
-  --   2048,2048, --Head
-  --   1024,2560,3072, --LArm
-  --   2048,2048,2048,2048,2048,2048, --LLeg
-  --   2048,2048,2048,2048,2048,2048, --RLeg
-  --   3072,1536,1024, --RArm
-  --   --2048,2048,		--For aux
-  -- };
   servo.posZero={
+    2048,2048, --Head
+    1024,2560,3072, --LArm
     2048,2048,2048,2048,2048,2048, --LLeg
     2048,2048,2048,2048,2048,2048, --RLeg
+    3072,1536,1024, --RArm
+    --2048,2048,		--For aux
   };
 
   -- PID Parameters
