@@ -125,7 +125,7 @@ function entry()
   -- Read head and not legs
   actuator.readType[1]=1;
   -- Read only kankles
-  -- actuator.readType[1]=3;
+  actuator.readType[1]=3;
 
   -- Read initial leg bias from config
   for i=1,12 do 	

@@ -107,9 +107,11 @@ function ping_probe(twait)
 end
 
 function set_delay(id, value)
-   local addr = 9;  -- Return Delay address
-   local inst = DynamixelPacket.write_byte(id, addr, value);
-   return unix.write(fd, inst);
+   if id >= 7 and id <= 18 then
+      local addr = 9;  -- Return Delay address
+      local inst = DynamixelPacket.write_byte(id, addr, value);
+      return unix.write(fd, inst);
+   end
 end
 
 function set_id(idOld, idNew)
@@ -119,179 +121,213 @@ function set_id(idOld, idNew)
 end
 
 function set_led(id, value)
-   local addr = 65;  -- Led
-   local inst = DynamixelPacket.write_byte(id, addr, value);
-   return unix.write(fd, inst);
+   if id >= 7 and id <= 18 then
+      local addr = 65;  -- Led
+      local inst = DynamixelPacket.write_byte(id, addr, value);
+      return unix.write(fd, inst);
+   end
 end
 
 function set_torque_enable(id, value)
    -- print(value);
-   local addr = 64;  -- Torque enable address
-   local inst = DynamixelPacket.write_byte(id, addr, value);
-   return unix.write(fd, inst);
+   if id >= 7 and id <= 18 then
+      local addr = 64;  -- Torque enable address
+      local inst = DynamixelPacket.write_byte(id, addr, value);
+      return unix.write(fd, inst);
+   end
 end
 
 function imu_calibration(id, value)
    -- print(value);
-   local addr = 50;  -- imu_control address
-   local inst = DynamixelPacket.write_byte(id, addr, value);
-   return unix.write(fd, inst);
+   if id >= 7 and id <= 18 then
+      local addr = 50;  -- imu_control address
+      local inst = DynamixelPacket.write_byte(id, addr, value);
+      return unix.write(fd, inst);
+   end
 end
 
 function dynamixel_power(id, value)
    -- print(value);
-   local addr = 24;  -- dynamixel_power address
-   local inst = DynamixelPacket.write_byte(id, addr, value);
-   return unix.write(fd, inst);
+   if id >= 7 and id <= 18 then
+      local addr = 24;  -- dynamixel_power address
+      local inst = DynamixelPacket.write_byte(id, addr, value);
+      return unix.write(fd, inst);
+   end
 end
 
 function set_velocity(id, value)
-   local addr = 104; -- Moving speed address
-   local inst = DynamixelPacket.write_word(id, addr, value);
-   return unix.write(fd, inst);
+   if id >= 7 and id <= 18 then
+      local addr = 104; -- Moving speed address
+      local inst = DynamixelPacket.write_word(id, addr, value);
+      return unix.write(fd, inst);
+   end
 end
 
 function set_hardness(id, value)
-   local addr = 100;  -- Torque limit address
-   local inst = DynamixelPacket.write_word(id, addr, value);
-   return unix.write(fd, inst)
+   if id >= 7 and id <= 18 then
+      local addr = 100;  -- Torque limit address
+      local inst = DynamixelPacket.write_word(id, addr, value);
+      return unix.write(fd, inst)
+   end
 end
 
 function set_command(id, value)
-   local addr = 116;  -- Goal position address
-   local inst = DynamixelPacket.write_word(id, addr, value);
-   return unix.write(fd, inst)
+   if id >= 7 and id <= 18 then
+      local addr = 116;  -- Goal position address
+      local inst = DynamixelPacket.write_word(id, addr, value);
+      return unix.write(fd, inst)
+   end
 end
 
 function get_led(id)
-   local twait = 0.100;
-   local addr = 65;  -- Led address
-   local inst = DynamixelPacket.read_data(id, addr, 4);
-   unix.read(fd); -- clear old status packets
-   unix.write(fd, inst)
-   local status = get_status(twait);
-   if (status) then
-      return status.parameter[1];
+   if id >= 7 and id <= 18 then
+      local twait = 0.100;
+      local addr = 65;  -- Led address
+      local inst = DynamixelPacket.read_data(id, addr, 4);
+      unix.read(fd); -- clear old status packets
+      unix.write(fd, inst)
+      local status = get_status(twait);
+      if (status) then
+         return status.parameter[1];
+      end
    end
 end
 
 function get_delay(id)
-   local twait = 0.100;
-   local addr = 9;  -- Return delay address
-   local inst = DynamixelPacket.read_data(id, addr, 4);
-   unix.read(fd); -- clear old status packets
-   unix.write(fd, inst)
-   local status = get_status(twait);
-   if (status) then
-      return status.parameter[1];
+   if id >= 7 and id <= 18 then
+      local twait = 0.100;
+      local addr = 9;  -- Return delay address
+      local inst = DynamixelPacket.read_data(id, addr, 4);
+      unix.read(fd); -- clear old status packets
+      unix.write(fd, inst)
+      local status = get_status(twait);
+      if (status) then
+         return status.parameter[1];
+      end
    end
 end
 
 function get_torque_enable(id)
-   local twait = 0.100;
-   local addr = 64;  -- Torque enable address
-   local inst = DynamixelPacket.read_data(id, addr, 4);
-   unix.read(fd); -- clear old status packets
-   unix.write(fd, inst)
-   local status = get_status(twait);
-   if (status) then
-      return status.parameter[1];
+   if id >= 7 and id <= 18 then
+      local twait = 0.100;
+      local addr = 64;  -- Torque enable address
+      local inst = DynamixelPacket.read_data(id, addr, 4);
+      unix.read(fd); -- clear old status packets
+      unix.write(fd, inst)
+      local status = get_status(twait);
+      if (status) then
+         return status.parameter[1];
+      end
    end
 end
 
 function get_position(id)
-   local twait = 0.100;
-   local addr = 132;  -- Present position address
-   local inst = 0; 
-   inst = DynamixelPacket.read_data(id, addr, 4);
-   unix.read(fd); -- clear old status packets
-   unix.write(fd, inst)
-   local status = get_status(twait);
-   if (status ~= nil and status.parameter ~= nil) then
-      noted = 0;
-      -- print(string.format("Dynamixel ID %d Position %d%d", status.id,status.parameter[2],status.parameter[1]));
-      return DynamixelPacket.byte_to_word(unpack(status.parameter,1,2));
-   else 
-      if noted == 0 then
-         print(id);
-         curTime = os.time();  
-         outfile = io.open("FreezeNote","w");
-         outfile:write(string.format(os.date('!%Y-%m-%d-%H:%M:%S GMT', curTime)) ," ID : ",string.format("%d",id), "\n");
-         outfile:close();
-         noted = 1;
+   if id >= 7 and id <= 18 then
+      local twait = 0.100;
+      local addr = 132;  -- Present position address
+      local inst = 0; 
+      inst = DynamixelPacket.read_data(id, addr, 4);
+      unix.read(fd); -- clear old status packets
+      unix.write(fd, inst)
+      local status = get_status(twait);
+      if (status ~= nil and status.parameter ~= nil) then
+         noted = 0;
+         -- print(string.format("Dynamixel ID %d Position %d%d", status.id,status.parameter[2],status.parameter[1]));
+         return DynamixelPacket.byte_to_word(unpack(status.parameter,1,2));
+      else 
+         if noted == 0 then
+            print(id);
+            curTime = os.time();  
+            outfile = io.open("FreezeNote","w");
+            outfile:write(string.format(os.date('!%Y-%m-%d-%H:%M:%S GMT', curTime)) ," ID : ",string.format("%d",id), "\n");
+            outfile:close();
+            noted = 1;
+         end
       end
    end
 end
 
 function get_command(id)
-   local twait = 0.100;
-   local addr = 116;  -- Goal position address
-   local inst = DynamixelPacket.read_data(id, addr, 4);
-   unix.read(fd); -- clear old status packets
-   unix.write(fd, inst)
-   local status = get_status(twait);
-   if (status) then
-      return DynamixelPacket.byte_to_word(unpack(status.parameter,1,2));
+   if id >= 7 and id <= 18 then
+      local twait = 0.100;
+      local addr = 116;  -- Goal position address
+      local inst = DynamixelPacket.read_data(id, addr, 4);
+      unix.read(fd); -- clear old status packets
+      unix.write(fd, inst)
+      local status = get_status(twait);
+      if (status) then
+         return DynamixelPacket.byte_to_word(unpack(status.parameter,1,2));
+      end
    end
 end
 
 function get_velocity(id)
-   local twait = 0.100;
-   local addr = 44; -- Moving speed address
-   -- local inst = DynamixelPacket.read_data(id, addr, 4);
-   unix.read(fd); -- clear old status packets
-   unix.write(fd, inst)
-   local status = get_status(twait);
-   if (status) then
-      return DynamixelPacket.byte_to_word(unpack(status.parameter,1,2));
+   if id >= 7 and id <= 18 then
+      local twait = 0.100;
+      local addr = 44; -- Moving speed address
+      -- local inst = DynamixelPacket.read_data(id, addr, 4);
+      unix.read(fd); -- clear old status packets
+      unix.write(fd, inst)
+      local status = get_status(twait);
+      if (status) then
+         return DynamixelPacket.byte_to_word(unpack(status.parameter,1,2));
+      end
    end
 end
 
 function get_hardness(id)
-   local twait = 0.100;
-   local addr = 36;  -- Torque limit address
-   --local inst = DynamixelPacket.read_data(id, addr, 4);
-   unix.read(fd); -- clear old status packets
-   unix.write(fd, inst)
-   local status = get_status(twait);
-   if (status) then
-      return DynamixelPacket.byte_to_word(unpack(status.parameter,1,2));
+   if id >= 7 and id <= 18 then
+      local twait = 0.100;
+      local addr = 36;  -- Torque limit address
+      --local inst = DynamixelPacket.read_data(id, addr, 4);
+      unix.read(fd); -- clear old status packets
+      unix.write(fd, inst)
+      local status = get_status(twait);
+      if (status) then
+         return DynamixelPacket.byte_to_word(unpack(status.parameter,1,2));
+      end
    end
 end
 
 function get_battery(id)
-   local twait = 0.100;
-   local addr = 144;  -- Present voltage address
-   local inst = DynamixelPacket.read_data(id, addr, 4);
-   unix.read(fd); -- clear old status packets
-   unix.write(fd, inst)
-   local status = get_status(twait);
-   if (status) then
-      return status.parameter[1];
+   if id >= 7 and id <= 18 then
+      local twait = 0.100;
+      local addr = 144;  -- Present voltage address
+      local inst = DynamixelPacket.read_data(id, addr, 4);
+      unix.read(fd); -- clear old status packets
+      unix.write(fd, inst)
+      local status = get_status(twait);
+      if (status) then
+         return status.parameter[1];
+      end
    end
 end
 
 function get_temperature(id)
-   local twait = 0.100;
-   local addr = 146;  -- Present Temperature
-   local inst = DynamixelPacket.read_data(id, addr, 4);
-   unix.read(fd); -- clear old status packets
-   unix.write(fd, inst)
-   local status = get_status(twait);
-   if (status) then
-      return status.parameter[1];
+   if id >= 7 and id <= 18 then
+      local twait = 0.100;
+      local addr = 146;  -- Present Temperature
+      local inst = DynamixelPacket.read_data(id, addr, 4);
+      unix.read(fd); -- clear old status packets
+      unix.write(fd, inst)
+      local status = get_status(twait);
+      if (status) then
+         return status.parameter[1];
+      end
    end
 end
 
 function read_data(id, addr, len, twait)
-   twait = twait or 0.100;
-   len  = len or 2;
-   local inst = DynamixelPacket.read_data(id, addr, len);
-   unix.read(fd); -- clear old status packets
-   unix.write(fd, inst)
-   local status = get_status(twait);
-   if (status) then
-      return status.parameter;
+   if id >= 7 and id <= 18 then
+      twait = twait or 0.100;
+      len  = len or 2;
+      local inst = DynamixelPacket.read_data(id, addr, len);
+      unix.read(fd); -- clear old status packets
+      unix.write(fd, inst)
+      local status = get_status(twait);
+      if (status) then
+         return status.parameter;
+      end
    end
 end
 
@@ -314,9 +350,11 @@ function sync_write_byte(ids, addr, data)
    local t = {};
    local n = 1;
    for i = 1,nid do
-      t[n] = ids[i];
-      t[n+1] =  data[i];
-      n = n + len + 1;
+      if ids[i] >= 7 and ids[i] <= 18 then
+         t[n] = ids[i];
+         t[n+1] =  data[i];
+         n = n + len + 1;
+      end
    end
    local inst = DynamixelPacket.sync_write(addr, len,
 					   string.char(unpack(t)));
@@ -329,12 +367,14 @@ function sync_write_word(ids, addr, data)
    local t = {};
    local n = 1;
    for i = 1,nid do
-      t[n] = ids[i];
-      t[n+1] = DynamixelPacket.word_to_byte(data[i] % 2^8);
-      t[n+2] = DynamixelPacket.word_to_byte(math.floor((data[i] % 2^16) / 2^8));
-      t[n+3] = DynamixelPacket.word_to_byte(math.floor((data[i] % 2^24) / 2^16));
-      t[n+4] = DynamixelPacket.word_to_byte((math.floor(data[i] / 2^24))); 
-      n = n + len + 1;
+      if ids[i] >= 7 and ids[i] <= 18 then
+         t[n] = ids[i];
+         t[n+1] = DynamixelPacket.word_to_byte(data[i] % 2^8);
+         t[n+2] = DynamixelPacket.word_to_byte(math.floor((data[i] % 2^16) / 2^8));
+         t[n+3] = DynamixelPacket.word_to_byte(math.floor((data[i] % 2^24) / 2^16));
+         t[n+4] = DynamixelPacket.word_to_byte((math.floor(data[i] / 2^24))); 
+         n = n + len + 1;
+      end
    end
    local inst = DynamixelPacket.sync_write(addr, len,
 					   string.char(unpack(t)));
