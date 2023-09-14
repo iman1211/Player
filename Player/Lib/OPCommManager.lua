@@ -43,6 +43,7 @@ USB_bug = 1;
 USB_bug = 0;
 torqueTrigger = 0;
 for i = 1,#Config.servo.dirReverse do
+  print(i, Config.servo.dirReverse[i])
   scale[Config.servo.dirReverse[i]] = -scale[Config.servo.dirReverse[i]];
 end
 
