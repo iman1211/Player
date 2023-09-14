@@ -111,6 +111,14 @@ km.standup_back = 'km_NSLOP_StandupFromBack2.lua';
 -- km.standup_back = 'km_NSLOP_StandupFromBackHokie.lua';
 km.maut_kanan = 'LongRight.lua';
 km.maut_kiri = 'LongLeft.lua';
+km.side_kanan = 'SideLeft.lua';
+km.side_kiri = 'SideRight.lua';
+km.medium_side_kanan = 'MediumSideRight.lua';
+km.medium_side_kiri = 'MediumSideLeft.lua';
+km.save_tengah = 'SaveCenter.lua';
+km.medium_kanan = 'MediumRight.lua';
+km.medium_kiri = 'MediumLeft.lua';
+km.serong_kanan = 'SerongRight.lua';
 -- Low battery level
 -- Need to implement this api better...
 bat_low = 117; -- 11.7V warning
