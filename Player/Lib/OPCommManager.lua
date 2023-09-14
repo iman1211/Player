@@ -563,16 +563,16 @@ function update()
   bulk_read();
 
   nonsync_read();
-  update_imu();
+  -- update_imu();
 
   count=count+1;
   sensor.updatedCount[1]=count%100; --This count indicates whether DCM has processed current reading or not
 
-  if actuator.battTest[1]==1 then --in test mode, refresh faster
-    sync_battery();
-  else
-    if count%100==0 then sync_battery();end
-  end
+  -- if actuator.battTest[1]==1 then --in test mode, refresh faster
+  --   sync_battery();
+  -- else
+  --   if count%100==0 then sync_battery();end
+  -- end
   if actuator.hardnessChanged[1]==1 then
     sync_hardness();
     unix.usleep(100);
@@ -607,7 +607,7 @@ function update()
   sync_command();
   unix.usleep(100);
 
-  sync_led();
+  -- sync_led();
 
   --[[ print(
     string.format("IMU Acc: %.2f %.2f %.2f ",unpack(sensorShm:get('imuAcc')))..
